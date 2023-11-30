@@ -1,0 +1,947 @@
+1) Bubble sort
+#include <stdio.h>
+void swap(int *xp, int *yp) {
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                swap(&arr[j], &arr[j+1]);
+            }
+        }
+    }
+}
+int main() {
+    int arr[] = {64, 25, 12, 22, 11};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    bubbleSort(arr, n);
+    printf("Sorted array: \n");
+    for (int i=0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+    return 0;
+}
+
+### Bubble Sort Algorithm:
+1. **`swap` Function:**
+   - Swaps two integers using their pointers.
+2. **`bubbleSort` Function:**
+   - Inputs:
+     - `arr[]`: The array to be sorted.
+     - `n`: Size of the array.
+   - Algorithm Steps:
+     - Performs multiple passes through the array.
+     - On each pass, compares adjacent elements and swaps them if they are in the wrong order (ascending in this case).
+     - The largest element bubbles up to the end of the array in each pass.
+     - The process repeats for `n-1` passes where `n` is the number of elements in the array.
+3. **`main` Function:**
+   - Initializes an integer array with values: {64, 25, 12, 22, 11}.
+   - Calls the `bubbleSort` function to sort the array.
+   - Prints the sorted array.
+### Complexity Analysis:
+- **Time Complexity:** 
+  - Average and Worst Case: O(n^2) where 'n' is the number of elements in the array.
+  - Bubble sort iterates through the array multiple times, comparing and swapping elements until the entire array is sorted.
+- **Space Complexity:**
+  - O(1) as the algorithm sorts the array in-place, requiring only a constant amount of extra space.
+  
+  
+  2) Insertion Sort
+  #include <stdio.h>
+void insertionSort(int arr[], int n) {
+    int i, key, j;
+    for (i = 1; i < n; i++) {
+        key = arr[i];
+        j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+int main() {
+    int arr[] = {12, 11, 13, 5, 6};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    insertionSort(arr, n);
+    printf("Sorted array: \n");
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+    return 0;
+}
+
+ Insertion Sort Algorithm:
+1. **`insertionSort` Function:**
+   - Inputs:
+     - `arr[]`: The array to be sorted.
+     - `n`: Size of the array.
+   - Algorithm Steps:
+     - Starts from the second element (`i = 1`) and iterates through the array.
+     - Picks each element (`key`) starting from the second position.
+     - Compares the `key` with the elements to its left (in the sorted portion).
+     - Moves elements greater than `key` one position to the right until it finds the correct position for `key`.
+     - Inserts `key` into its sorted position in the array.
+2. **`main` Function:**
+   - Initializes an integer array with values: {12, 11, 13, 5, 6}.
+   - Calls the `insertionSort` function to sort the array.
+   - Prints the sorted array.
+### Complexity Analysis:
+- **Time Complexity:**
+  - Best Case: O(n) - when the array is already sorted.
+  - Worst Case: O(n^2) - when the array is in reverse order.
+  - Average Case: O(n^2) - generally when elements are randomly distributed.
+- **Space Complexity:**
+  - O(1) - the algorithm sorts the array in-place without using additional space proportional to the input size.
+  
+  
+  3) Selection Sort
+  #include <stdio.h>
+void swap(int *xp, int *yp) {
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+void selectionSort(int arr[], int n) {
+    int i, j, min_idx;
+    for (i = 0; i < n-1; i++) {
+        min_idx = i;
+        for (j = i+1; j < n; j++) {
+            if (arr[j] < arr[min_idx])
+                min_idx = j;
+        }
+        swap(&arr[min_idx], &arr[i]);
+    }
+}
+int main() {
+    int arr[] = {64, 25, 12, 22, 11};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    selectionSort(arr, n);
+    printf("Sorted array: \n");
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+    return 0;
+}
+
+
+Selection Sort Algorithm:
+
+1. **`swap` Function:**
+   - Swaps two integers using their pointers.
+
+2. **`selectionSort` Function:**
+   - Inputs:
+     - `arr[]`: The array to be sorted.
+     - `n`: Size of the array.
+   - Algorithm Steps:
+     - Iterates through the array and selects the minimum element from the unsorted portion.
+     - Finds the smallest element in the unsorted portion and swaps it with the first element of the unsorted portion.
+     - Repeats this process for the entire array, gradually reducing the unsorted portion by one element in each iteration.
+
+3. **`main` Function:**
+   - Initializes an integer array with values: {64, 25, 12, 22, 11}.
+   - Calls the `selectionSort` function to sort the array.
+   - Prints the sorted array.
+
+ Complexity Analysis:
+- **Time Complexity:**
+  - Worst Case: O(n^2) comparisons and swaps, where 'n' is the number of elements.
+  - Best Case: O(n^2) comparisons and swaps (same as worst case, as it doesn’t depend on the input).
+  - Average Case: O(n^2) comparisons and swaps.
+- **Space Complexity:**
+  - O(1) - the algorithm sorts the array in-place, requiring only a constant amount of extra space for temporary variables.
+  
+  
+  
+  4) Binary Search
+  #include <stdio.h>
+int binarySearch(int arr[], int l, int r, int x) {
+    while (l <= r) {
+        int mid = l + (r - l) / 2;
+        if (arr[mid] == x)
+            return mid;
+        if (arr[mid] < x)
+            l = mid + 1;
+        else
+            r = mid - 1;
+    }
+    return -1;
+}
+int main() {
+    int arr[] = {2, 3, 4, 10, 40};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int x = 10;
+    int result = binarySearch(arr, 0, n - 1, x);
+    (result == -1) ? printf("Element is not present in the array")
+                   : printf("Element is present at index %d", result);
+    return 0;
+}
+
+Algorithm: Binary Search
+
+1. Set l as the leftmost index of the array and r as the rightmost index.
+2. Repeat while l is less than or equal to r:
+    a. Calculate mid as (l + (r - l) / 2).
+    b. If the middle element is equal to the target x, return mid.
+    c. If the middle element is less than x, update l = mid + 1.
+    d. If the middle element is greater than x, update r = mid - 1.
+3. If the target is not found in the array, return -1.
+
+
+5) Merge Sort
+#include <stdio.h>
+#include <stdlib.h>
+void merge(int arr[], int l, int m, int r) {
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    int L[n1], R[n2];
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+    i = 0;
+    j = 0;
+    k = l;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+void mergeSort(int arr[], int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
+    }
+}
+int main() {
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+    printf("Given array is \n");
+    for (int i = 0; i < arr_size; i++)
+        printf("%d ", arr[i]);
+    mergeSort(arr, 0, arr_size - 1);
+    printf("\nSorted array is \n");
+    for (int i = 0; i < arr_size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+    return 0;
+}
+
+Algorithm: Merge Sort
+
+1. Divide: Divide the array into two halves.
+2. Recursively sort the two halves:
+    a. Call mergeSort for the left half.
+    b. Call mergeSort for the right half.
+3. Merge: Merge the two sorted halves into a single sorted array.
+    a. Create temporary arrays for the left and right halves.
+    b. Merge the left and right arrays into the original array.
+    c. While merging, ensure elements are in sorted order.
+
+
+6) Quick Sort
+#include <stdio.h>
+void swap(int* a, int* b) {
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+int main() {
+    int arr[] = {10, 7, 8, 9, 1, 5};
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+    printf("Given array is \n");
+    for (int i = 0; i < arr_size; i++)
+        printf("%d ", arr[i]);
+    quickSort(arr, 0, arr_size - 1);
+    printf("\nSorted array is \n");
+    for (int i = 0; i < arr_size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+    return 0;
+}
+
+
+
+Algorithm: Quick Sort
+
+1. Partition:
+    a. Choose a pivot element from the array (usually the last element).
+    b. Rearrange elements in the array such that elements smaller than the pivot are placed before it,
+       and elements greater than the pivot are placed after it.
+    c. Place the pivot element in its correct position.
+2. Recursively sort subarrays:
+    a. Call quickSort for the elements before the pivot.
+    b. Call quickSort for the elements after the pivot.
+3. Continue partitioning and sorting until the entire array is sorted.
+
+
+7) Strassens Matrix
+#include <stdio.h>
+void strassen(int A[2][2], int B[2][2], int C[2][2]) {
+    int M1 = (A[0][0] + A[1][1]) * (B[0][0] + B[1][1]);
+    int M2 = (A[1][0] + A[1][1]) * B[0][0];
+    int M3 = A[0][0] * (B[0][1] - B[1][1]);
+    int M4 = A[1][1] * (B[1][0] - B[0][0]);
+    int M5 = (A[0][0] + A[0][1]) * B[1][1];
+    int M6 = (A[1][0] - A[0][0]) * (B[0][0] + B[0][1]);
+    int M7 = (A[0][1] - A[1][1]) * (B[1][0] + B[1][1]);
+    C[0][0] = M1 + M4 - M5 + M7;
+    C[0][1] = M3 + M5;
+    C[1][0] = M2 + M4;
+    C[1][1] = M1 - M2 + M3 + M6;
+}
+void printMatrix(int mat[2][2]) {
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++)
+            printf("%d ", mat[i][j]);
+        printf("\n");
+    }
+}
+int main() {
+    int A[2][2] = {{1, 2}, {3, 4}};
+    int B[2][2] = {{5, 6}, {7, 8}};
+    int C[2][2];
+    strassen(A, B, C);
+    printf("Resultant matrix C:\n");
+    printMatrix(C);
+    return 0;
+}
+
+
+
+
+1. Strassen's Algorithm Overview:
+
+   - The Strassen's algorithm is a recursive algorithm used to multiply two matrices efficiently by breaking down the matrix multiplication into seven smaller multiplications, reducing the number of required multiplications from eight to seven.
+
+2. `strassen` function:
+
+   - Inputs:
+     - Two 2x2 matrices `A` and `B`.
+     - Output matrix `C`.
+
+   - Algorithm Steps:
+   
+     - Calculate seven intermediate products (`M1` through `M7`) required for Strassen's method.
+       ```
+       M1 = (A[0][0] + A[1][1]) * (B[0][0] + B[1][1])
+       M2 = (A[1][0] + A[1][1]) * B[0][0]
+       M3 = A[0][0] * (B[0][1] - B[1][1])
+       M4 = A[1][1] * (B[1][0] - B[0][0])
+       M5 = (A[0][0] + A[0][1]) * B[1][1]
+       M6 = (A[1][0] - A[0][0]) * (B[0][0] + B[0][1])
+       M7 = (A[0][1] - A[1][1]) * (B[1][0] + B[1][1])
+       ```
+     - Compute the resultant matrix `C` using these intermediate products:
+       ```
+       C[0][0] = M1 + M4 - M5 + M7
+       C[0][1] = M3 + M5
+       C[1][0] = M2 + M4
+       C[1][1] = M1 - M2 + M3 + M6
+       ```
+
+3. `printMatrix` function:
+
+   - Inputs:
+     - A 2x2 matrix `mat`.
+
+   - Algorithm Steps:
+   
+     - Iterate through the elements of the matrix and print them.
+
+4. `main` function:
+
+   - Initialize two input matrices `A` and `B`.
+   - Call the `strassen` function to multiply matrices `A` and `B` and store the result in matrix `C`.
+   - Print the resultant matrix `C` using the `printMatrix` function.
+
+5. Complexity Analysis:
+
+   - The time complexity of Strassen's algorithm for multiplying two n × n matrices is approximately O(n^2.81) compared to the standard matrix multiplication algorithm's O(n^3).
+   - However, for smaller matrices like 2x2, the overhead of these additional computations might not outweigh the benefit of the reduced multiplications.
+
+
+
+8) Greedy Knapsack
+#include <stdio.h>
+#include <stdlib.h>
+struct Item {
+    int value;
+    int weight;
+    float ratio; // Value-to-weight ratio
+};
+int compare(const void *a, const void *b) {
+    return ((struct Item *)b)->ratio - ((struct Item *)a)->ratio;
+}
+void knapsack(int n, int capacity, struct Item items[]) {
+    // Sort items based on value-to-weight ratio in descending order
+    qsort(items, n, sizeof(struct Item), compare);
+    int currentWeight = 0;
+    float totalValue = 0.0;
+    for (int i = 0; i < n; i++) {
+        // If adding the entire item doesn't exceed capacity, add it
+        if (currentWeight + items[i].weight <= capacity) {
+            currentWeight += items[i].weight;
+            totalValue += items[i].value;
+        } else {
+            // Add a fraction of the item to fill the knapsack
+            float fraction = (float)(capacity - currentWeight) / items[i].weight;
+            totalValue += fraction * items[i].value;
+            break; // Knapsack is full, so break
+        }
+    }
+    printf("Maximum value in the knapsack: %.2f\n", totalValue);
+}
+int main() {
+    int n, capacity;
+    printf("Enter the number of items: ");
+    scanf("%d", &n);
+    struct Item items[n];
+    for (int i = 0; i < n; i++) {
+        printf("Enter value and weight for item %d: ", i + 1);
+        scanf("%d %d", &items[i].value, &items[i].weight);
+        items[i].ratio = (float)items[i].value / items[i].weight; // Calculate value-to-weight ratio
+    }
+    printf("Enter the capacity of the knapsack: ");
+    scanf("%d", &capacity);
+    knapsack(n, capacity, items);
+    return 0;
+}
+
+
+
+
+
+### Greedy Fractional Knapsack Algorithm:
+
+1. Knapsack Function (`knapsack`):
+
+   - Inputs:
+     - `n`: Number of items.
+     - `capacity`: Capacity of the knapsack.
+     - `items[]`: An array of items, each with a value, weight, and value-to-weight ratio.
+
+   - Algorithm Steps:
+
+     - Sort the items based on their value-to-weight ratio in descending order using the `qsort` function and a custom comparison function (`compare`).
+     - Initialize `currentWeight` to 0 and `totalValue` to 0.0.
+     - Iterate through the sorted items:
+       - If adding the entire item's weight doesn't exceed the capacity, add the item's entire value and weight to the knapsack.
+       - If adding the entire item would exceed the capacity, add a fraction of the item to fill the remaining capacity.
+       - Break the loop as the knapsack is full.
+
+   - Output:
+     - Print the maximum value that can be accommodated in the knapsack.
+
+2. **`compare` Function (Custom Comparator for `qsort`):**
+
+   - Inputs:
+     - Pointers to two items in the array.
+
+   - Algorithm Steps:
+   
+     - Compare items based on their value-to-weight ratio in descending order.
+
+3. `main` Function:
+
+   - Inputs:
+     - Number of items (`n`), values, weights, and knapsack capacity.
+
+   - Algorithm Steps:
+   
+     - Read inputs: number of items, their values, weights, and the capacity of the knapsack.
+     - Calculate the value-to-weight ratio for each item.
+     - Call the `knapsack` function with the provided inputs.
+
+### Complexity Analysis:
+
+- The time complexity of the Greedy Fractional Knapsack algorithm is O(n log n) due to the sorting step (sorting the items based on the ratio), where 'n' is the number of items.
+- Sorting the items in descending order based on their value-to-weight ratio ensures that the algorithm can select items greedily by picking the most valuable items first until the knapsack is full.
+
+This algorithm prioritizes items with the highest value-to-weight ratio, allowing it to efficiently fill the knapsack with the most valuable items given its capacity constraints.
+
+
+9) Graph Coloring
+#include <stdio.h>
+#include <stdbool.h>
+#define V 4
+bool isSafe(int v, int graph[V][V], int color[], int c) {
+    for (int i = 0; i < V; i++) {
+        if (graph[v][i] && color[i] == c)
+            return false;
+    }
+    return true;
+}
+bool graphColoringUtil(int graph[V][V], int m, int color[], int v) {
+    if (v == V)
+        return true;
+    for (int c = 1; c <= m; c++) {
+        if (isSafe(v, graph, color, c)) {
+            color[v] = c;
+            if (graphColoringUtil(graph, m, color, v + 1))
+                return true;
+            color[v] = 0;
+        }
+    }
+    return false;
+}
+void graphColoring(int graph[V][V], int m) {
+    int color[V];
+    for (int i = 0; i < V; i++)
+        color[i] = 0;
+    if (!graphColoringUtil(graph, m, color, 0))
+        printf("Solution does not exist\n");
+    else {
+        printf("Solution exists. Vertex colors are:\n");
+        for (int i = 0; i < V; i++)
+            printf("Vertex %d: Color %d\n", i + 1, color[i]);
+    }
+}
+int main() {
+    int graph[V][V] = {
+        {0, 1, 1, 1},
+        {1, 0, 1, 0},
+        {1, 1, 0, 1},
+        {1, 0, 1, 0}
+    };
+    int m = 3; // Number of colors
+    graphColoring(graph, m);
+    return 0;
+}
+
+
+
+
+ Graph Coloring Algorithm:
+
+1. isSafe` function:
+
+   - Inputs:
+     - `v`: Vertex number.
+     - `graph[][]`: Adjacency matrix representing the graph.
+     - `color[]`: An array storing colors assigned to vertices.
+     - `c`: Color to be checked for safety.
+
+   - Algorithm Steps:
+
+     - Check if assigning color `c` to vertex `v` is safe by iterating through all adjacent vertices of `v` in the graph.
+     - If any adjacent vertex has already been assigned the same color `c`, return `false`.
+     - If no adjacent vertex has the same color `c`, return `true`, indicating that it's safe to assign color `c` to vertex `v`.
+
+2. `graphColoringUtil` function:
+
+   - Inputs:
+     - `graph[][]`: Adjacency matrix representing the graph.
+     - `m`: Number of available colors.
+     - `color[]`: An array storing colors assigned to vertices.
+     - `v`: Current vertex to be colored.
+
+   - Algorithm Steps:
+
+     - Base case: If all vertices are colored, return `true`.
+     - For the current vertex `v`, try assigning colors from 1 to `m`.
+     - Check if assigning each color is safe using the `isSafe` function.
+     - If a color is safe, assign it to the current vertex and recursively call the function for the next vertex.
+     - If the recursive call returns `true`, indicating a solution exists, return `true`.
+     - If no color leads to a solution, backtrack by resetting the color of the current vertex and try the next color.
+     - If no color leads to a solution for the current vertex, return `false`.
+
+3.graphColoring` function:
+
+   - Inputs:
+     - `graph[][]`: Adjacency matrix representing the graph.
+     - `m`: Number of available colors.
+
+   - Algorithm Steps:
+
+     - Initialize an array `color[]` to store the colors assigned to vertices, initially set to 0 (no color).
+     - Call the `graphColoringUtil` function starting from vertex 0.
+     - If a solution exists, print the colors assigned to each vertex.
+     - If no solution exists, print that a solution does not exist for the given constraints.
+
+4. `main` function:
+
+   - Define an adjacency matrix representing the graph.
+   - Set the number of available colors (`m`) to 3.
+   - Call the `graphColoring` function with the graph and the number of colors.
+
+Complexity Analysis:
+
+- The algorithm checks all possible color combinations for vertices in a backtracking manner.
+- The time complexity of the graph coloring algorithm depends on the number of vertices and edges in the graph.
+- In the worst-case scenario, the time complexity is exponential, O(m^V), where 'V' is the number of vertices and 'm' is the number of colors.
+
+
+10) N Queens
+#include <stdio.h>
+#include <stdbool.h>
+#define N 8
+void printSolution(int board[N][N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            printf("%2d ", board[i][j]);
+        }
+        printf("\n");
+    }
+}
+bool isSafe(int board[N][N], int row, int col) {
+    int i, j;
+    for (i = 0; i < col; i++)
+        if (board[row][i])
+            return false;
+    for (i = row, j = col; i >= 0 && j >= 0; i--, j--)
+        if (board[i][j])
+            return false;
+    for (i = row, j = col; i < N && j >= 0; i++, j--)
+        if (board[i][j])
+            return false;
+    return true;
+}
+bool solveNQueensUtil(int board[N][N], int col) {
+    if (col >= N)
+        return true;
+    for (int i = 0; i < N; i++) {
+        if (isSafe(board, i, col)) {
+            board[i][col] = 1;
+            if (solveNQueensUtil(board, col + 1))
+                return true;
+            board[i][col] = 0;
+        }
+    }
+    return false;
+}
+bool solveNQueens() {
+    int board[N][N] = {{0}};
+    if (solveNQueensUtil(board, 0) == false) {
+        printf("Solution does not exist");
+        return false;
+    }
+    printSolution(board);
+    return true;
+}
+int main() {
+    solveNQueens();
+    return 0;
+}
+
+
+
+ N-Queens Problem Algorithm:
+
+1. `printSolution` Function:
+
+   - Inputs:
+     - `board[][]`: N x N chessboard with queens' positions.
+
+   - Algorithm Steps:
+
+     - Iterates through the chessboard and prints the positions of queens.
+     - Prints a `0` if there's no queen at a particular position and a `1` if there's a queen.
+
+2. `isSafe` Function:
+
+   - Inputs:
+     - `board[][]`: N x N chessboard with queens' positions.
+     - `row`: Row number to check for safety.
+     - `col`: Column number to check for safety.
+
+   - Algorithm Steps:
+
+     - Checks if it's safe to place a queen at a given position (`row`, `col`) on the chessboard.
+     - Checks three conditions to ensure safety:
+       - No queen in the same row to the left of the current column.
+       - No queen in the upper diagonal.
+       - No queen in the lower diagonal.
+
+3. `solveNQueensUtil` Function:
+
+   - Inputs:
+     - `board[][]`: N x N chessboard with queens' positions.
+     - `col`: Column number to consider placing a queen.
+
+   - Algorithm Steps:
+
+     - Base case: If all queens are placed (i.e., `col >= N`), return `true` to indicate a successful solution.
+     - For each row in the current column `col`, check if it's safe to place a queen there.
+     - If safe, place the queen at position (`i`, `col`) and recursively call `solveNQueensUtil` for the next column (`col + 1`).
+     - If placing a queen in that position doesn’t lead to a solution, backtrack by resetting that position to `0` and try the next row.
+
+4. `solveNQueens` Function:
+
+   - Algorithm Steps:
+
+     - Initialize an empty chessboard (`board[N][N]`) and call `solveNQueensUtil` starting from column `0`.
+     - If no solution exists (`solveNQueensUtil` returns `false`), print "Solution does not exist."
+     - If a solution exists, print the chessboard configuration with queens placed.
+
+5. **`main` Function:**
+
+   - Calls the `solveNQueens` function to solve the N-Queens problem and print the solution or indicate if no solution exists.
+
+ Complexity Analysis:
+
+- The time complexity of the N-Queens problem solution using backtracking is O(N!), where 'N' is the number of queens to be placed.
+- The algorithm tries all possible combinations to place queens on the chessboard while ensuring none of them attacks each other.
+- The space complexity is O(N^2) for the chessboard representation.
+
+
+
+11) Travelling Salesman Problem
+#include <stdio.h>
+#include <limits.h>
+#define N 4
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+int tsp(int graph[N][N], int mask, int pos, int dp[N][1 << N]) {
+    if (mask == (1 << N) - 1) {
+        return graph[pos][0];
+    }
+    if (dp[pos][mask] != -1) {
+        return dp[pos][mask];
+    }
+    int minCost = INT_MAX;
+    for (int nextCity = 0; nextCity < N; nextCity++) {
+        if ((mask & (1 << nextCity)) == 0) {
+            int newMask = mask | (1 << nextCity);
+            int cost = graph[pos][nextCity] + tsp(graph, newMask, nextCity, dp);
+            minCost = min(minCost, cost);
+        }
+    }
+    dp[pos][mask] = minCost;
+    return minCost;
+}
+int main() {
+    int graph[N][N] = { {0, 10, 15, 20},
+                        {10, 0, 35, 25},
+                        {15, 35, 0, 30},
+                        {20, 25, 30, 0} };
+    int dp[N][1 << N];
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < (1 << N); j++)
+            dp[i][j] = -1;
+    int result = tsp(graph, 1, 0, dp);
+    printf("Minimum cost for the TSP: %d\n", result);
+    return 0;
+}
+
+
+
+
+
+The provided code solves the Traveling Salesman Problem (TSP) using dynamic programming and bitwise masking to find the minimum cost to visit all cities starting and ending at the same city. Here's an in-depth breakdown of the algorithm and its implementation:
+
+### Traveling Salesman Problem (TSP) Algorithm:
+
+1. `min` Function:
+
+   - Inputs:
+     - `a`, `b`: Two integers.
+
+   - Algorithm Steps:
+   
+     - Returns the minimum value between `a` and `b`.
+
+2. `tsp` Function:
+
+   - Inputs:
+     - `graph[][]`: Adjacency matrix representing the distances between cities.
+     - `mask`: Bitmask representing visited cities.
+     - `pos`: Current position (city).
+     - `dp[][]`: Dynamic programming table to store computed costs.
+
+   - Algorithm Steps:
+
+     - Base cases:
+       - If all cities have been visited (`mask == (1 << N) - 1`), return the cost of returning to the starting city.
+       - If the cost for the current position and mask is already computed and stored in `dp`, return that value.
+
+     - Initialize `minCost` to a very large value (`INT_MAX`).
+     - Iterate through all cities (`nextCity`) to find the next unvisited city.
+     - If the `nextCity` is not visited (`mask & (1 << nextCity)) == 0`):
+       - Set the `newMask` by marking the `nextCity` as visited.
+       - Recursively calculate the cost of visiting `nextCity` from the `pos` and update `minCost` accordingly.
+
+     - Store the minimum cost obtained for the current position and mask in the `dp` table.
+     - Return the `minCost`.
+
+3. `main` Function:
+
+   - Inputs:
+     - `graph[][]`: Adjacency matrix representing distances between cities.
+
+   - Algorithm Steps:
+
+     - Initialize a dynamic programming table `dp` with all values set to -1.
+     - Call the `tsp` function with the initial state:
+       - Start from city 0 (`pos = 0`), and the starting city is already visited (`mask = 1`).
+     - Print the minimum cost obtained for the TSP.
+Complexity Analysis:
+
+- The time complexity of the TSP solution using dynamic programming with bit masking is O(N^2 * 2^N), where 'N' is the number of cities.
+- The space complexity is O(N * 2^N) for the dynamic programming table.
+
+
+
+12) Prims
+#include <stdio.h>
+#include <limits.h>
+#define V 5
+int minKey(int key[], int mstSet[]) {
+    int min = INT_MAX, min_index;
+    for (int v = 0; v < V; v++)
+        if (mstSet[v] == 0 && key[v] < min)
+            min = key[v], min_index = v;
+    return min_index;
+}
+void printMST(int parent[], int graph[V][V]) {
+    printf("Edge \tWeight\n");
+    for (int i = 1; i < V; i++)
+        printf("%d - %d \t%d \n", parent[i], i, graph[i][parent[i]]);
+}
+void primMST(int graph[V][V]) {
+    int parent[V];
+    int key[V];
+    int mstSet[V];
+    for (int i = 0; i < V; i++)
+        key[i] = INT_MAX, mstSet[i] = 0;
+    key[0] = 0;
+    parent[0] = -1;
+    for (int count = 0; count < V - 1; count++) {
+        int u = minKey(key, mstSet);
+        mstSet[u] = 1;
+        for (int v = 0; v < V; v++)
+            if (graph[u][v] && mstSet[v] == 0 && graph[u][v] < key[v])
+                parent[v] = u, key[v] = graph[u][v];
+    }
+    printMST(parent, graph);
+}
+int main() {
+    int graph[V][V] = {{0, 2, 0, 6, 0},
+                       {2, 0, 3, 8, 5},
+                       {0, 3, 0, 0, 7},
+                       {6, 8, 0, 0, 9},
+                       {0, 5, 7, 9, 0}};
+    primMST(graph);
+    return 0;
+}
+
+prims algo 
+
+Sure, I'd be happy to break down the algorithms implemented in the provided code.
+
+Prim's Algorithm for Minimum Spanning Tree (MST):
+minKey Function:
+Finds the vertex with the minimum key value from the set of vertices not yet included in the MST.
+key[]: Array to store the key values used to pick the minimum weight edge.
+mstSet[]: Array to represent the set of vertices included in the MST.
+printMST Function:
+Prints the MST constructed by Prim's algorithm.
+primMST Function:
+Constructs and prints the MST using Prim's algorithm.
+Initializes arrays for key[], mstSet[], and parent[].
+Loops through all vertices, updates key[], and constructs the MST.
+Prim's Algorithm:
+Time Complexity: O(V^2) for adjacency matrix representation, where V is the number of vertices.
+Space Complexity: O(V^2) for the graph representation.
+
+
+
+13) Rabin Karp
+#include <stdio.h>
+#include <string.h>
+#define d 256 
+void search(char pat[], char txt[], int q) {
+    int M = strlen(pat);
+    int N = strlen(txt);
+    int i, j;
+    int p = 0;
+    int t = 0; 
+    int h = 1;
+    for (i = 0; i < M - 1; i++)
+        h = (h * d) % q;
+    for (i = 0; i < M; i++) {
+        p = (d * p + pat[i]) % q;
+        t = (d * t + txt[i]) % q;
+    }
+    for (i = 0; i <= N - M; i++) {
+        if (p == t) {
+            for (j = 0; j < M; j++) {
+                if (txt[i + j] != pat[j])
+                    break;
+            }
+            if (j == M)
+                printf("Pattern found at index %d\n", i);
+        }
+        if (i < N - M) {
+            t = (d * (t - txt[i] * h) + txt[i + M]) % q;
+            if (t < 0)
+                t = (t + q);
+        }
+    }
+}
+int main() {
+    char txt[] = "ABCCDDAEFG";
+    char pat[] = "CDD";
+    int q = 101; // A prime number
+    search(pat, txt, q);
+    return 0;
+}
+
+
+Rabin-Karp Algorithm for Pattern Searching:
+search Function:
+Implements the Rabin-Karp algorithm for pattern searching in a given text.
+pat[]: The pattern to be searched.
+txt[]: The text in which the pattern is searched.
+q: A prime number used as a modulus in hashing.
+Calculates hash values for the pattern and the first window of text.
+Compares the hash values and checks character by character if the pattern matches the text in that window.
+Shifts the window and updates hash values until the pattern is found or the end of the text is reached.
+
+
+Rabin-Karp Algorithm:
+Average Time Complexity: O(N + M) for text of length N and pattern of length M.
+Space Complexity: O(1) as the space used is independent of the input sizes.
